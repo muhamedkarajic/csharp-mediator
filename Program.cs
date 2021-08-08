@@ -2,12 +2,19 @@
 {
     static void Main()
     {
-        var mediator = new ConcreteMediator();
+        var teamChat = new TeamChatRoom();
 
-        var c1 = mediator.CreateCollegue<Colleague1>();
-        var c2 = mediator.CreateCollegue<Colleague2>();
+        var steve = new Developer("Steve");
+        var justin = new Developer("Justin");
+        var jenna = new Developer("Jenna");
+        var kim = new Tester("Kim");
+        var julia = new Tester("Julia");
 
-        c1.Send("Hello World! (from c1)");
-        c2.Send("Hi! (from c2)");
+        teamChat.RegisterMembers(steve, justin, jenna, kim, julia);
+
+        steve.Send("Hello everyone, I'm Steve the new Developer!");
+        kim.Send("Hi Steve! I'm Kim the new Tester.");
+
+        steve.SendTo<Tester>("Make sure you are executing your Unit Test before checking in!");
     }
 }
