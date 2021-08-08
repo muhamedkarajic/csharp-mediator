@@ -1,13 +1,21 @@
+using System.Collections.Generic;
+using System.Linq;
+
 public class ConcreteMediator : Mediator
 {
-    public Colleague1 Colleague1 { get; set; }
-    public Colleague2 Colleague2 { get; set; }
+    private List<Colleague> collegues = new List<Colleague>();
+
+    public void Register(Colleague colleague)
+    {
+        colleague.SetMediator(this);
+        collegues.Add(colleague);
+    }
 
     public override void Send(string message, Colleague collegue)
     {
-        if (collegue == Colleague1)
-            Colleague2.HandleNotification(message);
-        else
-            Colleague1.HandleNotification(message);
+        collegues
+            .Where(c => c != collegue)
+            .ToList()
+            .ForEach(c => c.HandleNotification(message));
     }
 }
