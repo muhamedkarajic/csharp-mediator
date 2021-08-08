@@ -11,6 +11,14 @@ public class ConcreteMediator : Mediator
         collegues.Add(colleague);
     }
 
+    public T CreateCollegue<T>() where T : Colleague, new()
+    {
+        var c = new T();
+        c.SetMediator(this);
+        collegues.Add(c);
+        return c;
+    }
+
     public override void Send(string message, Colleague collegue)
     {
         collegues
